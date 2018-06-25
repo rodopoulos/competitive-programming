@@ -4,48 +4,45 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int dp[51][100],
-    d[51], w[51];
+int dp[20*30][30],
+    min[51], piz[51];
 
-int max_damage(int n, int k) {
-  if (n == 0 || k == 0)
+int max_pizzas(int m, int p) {
+  if (m == 0 || p == 0)
     return 0;
 
-  if (w[n] > k)
-    return max_damage(n-1, k);
+  if (piz[m] > p)
+    return max_pizzas(m-1, p);
 
-  if (!dp[n][k]) {
-    dp[n][k] = max(
-      d[n] + max_damage(n-1, k - w[n]), // use the bullet
-      max_damage(n-1, k) // leave the bullet
+  if (!dp[m][p]) {
+    dp[m][p] = max(
+      min[n] + max_pizzas(m-1, p - piz[n]), // use the bullet
+      max_pizzas(n-1, p) // leave the bullet
     );
   }
 
-  return dp[n][k];
+  return dp[m][p];
 }
 
 int main() {
-  int t;
-  cin >> t;
+  int n;
+  cin >> n;
 
-  while (t--) {
-    int n, k, r, D;
-    cin >> n;
+  while (n) {
+    int P, M;
+    cin >> P;
+    memset(dp,0,sizeof(dp));
 
     for (int i = 1; i <= n; i++) {
-      cin >> d[i] >> w[i];
+      cin >> min[i] >> piz[i];
     }
 
     cin >> k >> r;
 
-    D = max_damage(n, k);
+    M = max_pizzas(n, P);
 
-    if (D < r) {
-      cout << "Falha na missao" << endl;
-    } else {
-      cout << "Missao completada com sucesso" << endl;
-    }
-    memset(dp,0,sizeof(dp));
+    cout << M << " min." << endl;
+    cin >> n;
   }
 
   return 0;
