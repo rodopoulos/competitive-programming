@@ -1,48 +1,48 @@
-/** SOLUTION OVERVIEW
- * This is exactly the knapsack problem.
- */
 #include <bits/stdc++.h>
 using namespace std;
 
-int dp[20*30][30],
-    min[51], piz[51];
+int dp[51][100],
+    d[51], w[51];
 
-int max_pizzas(int m, int p) {
-  if (m == 0 || p == 0)
+int max_damage(int n, int k) {
+  if (n == 0 || k == 0)
     return 0;
 
-  if (piz[m] > p)
-    return max_pizzas(m-1, p);
+  if (w[n] > k)
+    return max_damage(n-1, k);
 
-  if (!dp[m][p]) {
-    dp[m][p] = max(
-      min[n] + max_pizzas(m-1, p - piz[n]), // use the bullet
-      max_pizzas(n-1, p) // leave the bullet
+  if (!dp[n][k]) {
+    dp[n][k] = max(
+      d[n] + max_damage(n-1, k - w[n]), // use the bullet
+      max_damage(n-1, k) // leave the bullet
     );
   }
 
-  return dp[m][p];
+  return dp[n][k];
 }
 
 int main() {
-  int n;
-  cin >> n;
+  int t;
+  cin >> t;
 
-  while (n) {
-    int P, M;
-    cin >> P;
-    memset(dp,0,sizeof(dp));
+  while (t--) {
+    int n, k, r, D;
+    cin >> n;
 
     for (int i = 1; i <= n; i++) {
-      cin >> min[i] >> piz[i];
+      cin >> d[i] >> w[i];
     }
 
     cin >> k >> r;
 
-    M = max_pizzas(n, P);
+    D = max_damage(n, k);
 
-    cout << M << " min." << endl;
-    cin >> n;
+    if (D < r) {
+      cout << "Falha na missao" << endl;
+    } else {
+      cout << "Missao completada com sucesso" << endl;
+    }
+    memset(dp,0,sizeof(dp));
   }
 
   return 0;
