@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define BIGN 1000*1000*1000
 
 int a[26], dp[1000005], n;
 
@@ -25,7 +26,21 @@ int min_blocks__top_down_dp(int x) {
   return dp[x];
 }
 
+int min_blocks(int x) {
+  dp[0] = 0;
+  for (int i = 1; i <= x; i++)
+    dp[i] = BIGN;
 
+  for (int i = 0; i <= x; i++) {
+    for (int j = 1; j <= n; j++) {
+      if (a[j] <= i){
+        dp[i] = min(dp[i], dp[i - a[j]] + 1);
+      }
+    }
+  }
+
+  return dp[x];
+}
 
 int main() {
   int t;
