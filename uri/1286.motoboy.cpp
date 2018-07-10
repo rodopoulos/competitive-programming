@@ -13,7 +13,7 @@ int max_pizzas(int n, int p) {
 
   if (!dp[n][p]) {
     dp[n][p] = max(
-      mn[n] + max_pizzas(n-1, p - pz[n]), 
+      mn[n] + max_pizzas(n-1, p - pz[n]),
       max_pizzas(n-1, p)
     );
   }
