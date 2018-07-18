@@ -1,3 +1,7 @@
+/* You are given an array of n non-negative integers. You are asked q times to
+ * find how many of those n integers belongs to a [l,r] range of non-negative
+ * integers. Each query may have a diferente range.
+ */
 #include <iostream>
 #include <map>
 #include <set>
